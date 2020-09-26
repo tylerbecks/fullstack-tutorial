@@ -1,6 +1,18 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+  type Query {
+    launches: [Launch]!
+    launch(id: ID!): Launch
+    me: User
+  }
+
+  type Mutation {
+    bookTrips(launchIds: [ID]!): TripUpdateResponse!
+    cancelTrip(launchId: ID!): TripUpdateResponse!
+    login(email: String): String # login token
+  }
+
   type Launch {
     id: ID!
     site: String
@@ -29,18 +41,6 @@ const typeDefs = gql`
   enum PatchSize {
     SMALL
     LARGE
-  }
-
-  type Query {
-    launches: [Launch]!
-    launch(id: ID!): Launch
-    me: User
-  }
-
-  type Mutation {
-    bookTrips(launchIds: [ID]!): TripUpdateResponse!
-    cancelTrip(launchId: ID!): TripUpdateResponse!
-    login(email: String): String # login token
   }
 
   type TripUpdateResponse {
